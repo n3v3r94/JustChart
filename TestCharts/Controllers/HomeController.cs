@@ -22,7 +22,7 @@ namespace TestCharts.Controllers
         public IActionResult Index()
         {
 
-            string path = @"C:\Users\Dell T7500\source\repos\TestCharts\TestCharts\homePageChart.json";
+            string path = @"./homePageChart.json";
             HomePageCharts test = new HomePageCharts();
             using (StreamReader r = new StreamReader(path))
             {
