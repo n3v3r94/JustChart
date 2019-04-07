@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using TestCharts.Models;
-using TestCharts.Services;
+using TestCharts.Service;
 using TestCharts.ViewModels;
 
 namespace TestCharts.Controllers
 {
     public class HomeController : Controller
     {
-
         private readonly IHomeService homeService;
 
         public HomeController(IHomeService homeService)
@@ -19,22 +17,10 @@ namespace TestCharts.Controllers
             this.homeService = homeService;
         }
 
-        public IActionResult Index()
+        public IActionResult  Index()
         {
-
-            string path = @"./homePageChart.json";
-            HomePageCharts test = new HomePageCharts();
-            using (StreamReader r = new StreamReader(path))
-            {
-                var json = r.ReadToEnd();
-               test  =  JsonConvert.DeserializeObject<HomePageCharts> (json);
-
-               
-
-            }
-
-           ChartDataViewModel dataChart =  homeService.GetChartData();
-
+            var test =  homeService.GetChartsConfiguration();
+         
             return View(test);
         }
 

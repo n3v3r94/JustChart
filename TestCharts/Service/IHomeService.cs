@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestCharts.ViewModels;
 
-namespace TestCharts.Services
+namespace TestCharts.Service
 {
-  public  interface IHomeService
+    public interface IHomeService
     {
-
-        ChartDataViewModel GetChartData();
-        
+         Task<HomePageCharts>   GetChartsConfiguration();
     }
 }
