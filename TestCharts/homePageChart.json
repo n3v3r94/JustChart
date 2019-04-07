@@ -1,0 +1,23 @@
+{
+  "configs": [
+    {
+      "pageTitle": "homePage",
+      "type": "bar",
+      "serviceHandler": "IHomeService",
+      "idChart": "myChart"
+    },
+    {
+      "pageTitle": "homePage",
+      "type": "line",
+      "serviceHandler": "IHomeService",
+      "idChart": "myChart2"
+    },
+    {
+      "pageTitle": "homePage",
+      "type": "pie",
+      "serviceHandler": "IHomeService",
+      "idChart": "myChart3"
+    }
+  ]
+}
+
