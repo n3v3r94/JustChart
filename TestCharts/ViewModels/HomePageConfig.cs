@@ -11,5 +11,6 @@ namespace TestCharts.ViewModels
         public string Type { get; set; }
         public string Servicehandler { get; set; }
         public string IdChart {get;set;}
+        public List<int> Data { get; set; }
     }
 }

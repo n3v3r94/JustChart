@@ -4,19 +4,22 @@
       "pageTitle": "homePage",
       "type": "bar",
       "serviceHandler": "IHomeService",
-      "idChart": "myChart"
+      "idChart": "myChart",
+      "data": [ "5", "7", "9", "3", "1", "4" ]
     },
     {
       "pageTitle": "homePage",
       "type": "line",
       "serviceHandler": "IHomeService",
-      "idChart": "myChart2"
+      "idChart": "myChart2",
+      "data": [ "12", "9", "3", "5", "2", "3" ]
     },
     {
       "pageTitle": "homePage",
       "type": "pie",
       "serviceHandler": "IHomeService",
-      "idChart": "myChart3"
+      "idChart": "myChart3",
+      "data": [ "9", "12", "5", "7", "9", "1" ]
     }
   ]
 }

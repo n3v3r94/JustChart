@@ -5,6 +5,8 @@ using System.IO;
 using TestCharts.Models;
 using TestCharts.Service;
 using TestCharts.ViewModels;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TestCharts.Controllers
 {
@@ -17,11 +19,22 @@ namespace TestCharts.Controllers
             this.homeService = homeService;
         }
 
-        public IActionResult  Index()
+        public   IActionResult  Index()
         {
-            var test =  homeService.GetChartsConfiguration();
+            //TODO get data from API 
+            var test =    homeService.GetChartsConfiguration();
          
-            return View(test);
+           
+            return View (test);
+        }
+
+        public async Task<IActionResult> GetData()
+        {
+            //TODO get data from API 
+            var test = await homeService.GetChartsConfiguration();
+
+
+            return Json(test);
         }
 
         public IActionResult Privacy()

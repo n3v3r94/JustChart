@@ -11,7 +11,9 @@
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
 <div class="row">
     <div class=" col-md-4">
@@ -29,14 +31,14 @@
 
 <script>
 
+    $.get("Home/GetData", function (data) {
+        $.each(data.configs, function (key, value) {
+            createChart(value.type, value.idChart, value.data)
+        });
+    });
 
-@foreach (var item in test.configs)
-{
 
-    <text>createChart('@item.Type', '@item.IdChart');</text>
-}
-
-    function createChart(type,idChart) {
+    function createChart(type,idChart,data) {
 
         var ctx = document.getElementById(idChart).getContext('2d');
         var myChart = new Chart(ctx, {
@@ -46,7 +48,7 @@
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: data ,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
