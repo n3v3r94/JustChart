@@ -11,8 +11,9 @@ namespace TestCharts.Implemantation
 {
     public class HomeService : IHomeService
     {
-        public async Task<HomePageCharts> GetChartsConfiguration()
+        public async Task<HomePageCharts> GetDataJson()
         {
+
             string path = @"./homePageChart.json";
             HomePageCharts  test = new HomePageCharts();
              using (StreamReader reader = new StreamReader(path))
