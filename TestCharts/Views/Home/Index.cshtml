@@ -1,10 +1,10 @@
-﻿@using TestCharts.ViewModels
-
-@model HomePageCharts
+﻿@using System.Web
+@using Newtonsoft.Json;
+@model HomePageConfig
 
 @{
     ViewData["Title"] = "Home Page";
-   
+
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
@@ -12,18 +12,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 
-<div class="row">
-    <div class=" col-md-4">
-        <canvas id="myChart" width="400" height="400"></canvas>
-    </div>
-    <div class="col-md-4">
-        <canvas id="myChart2" width="400" height="400"></canvas>
-    </div>
-    <div class="col-md-4">
-        <canvas id="myChart3" width="400" height="400"></canvas>
-    </div>
 
-</div>
 <div class="row">
     <div class=" col-md-4">
         <canvas id="myChartAPI" width="400" height="400"></canvas>
@@ -36,100 +25,140 @@
     </div>
 </div>
 
+
 <script>
+    var myChart;
 
-    $.get("Home/GetDataJson", function (data) {
-        $.each(data.configs, function (key, value) {
-            createChart(value.type, value.idChart, value.data)
-        });
-    });
+    let chartConfiguration = @Html.Raw(Json.Serialize(Model));
 
-    function createChart(type,idChart,data) {
+    var emptyDataset = {
+        label: "Employee2",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba(247, 0, 0,0.4)",
+        borderColor: "green", // The main line color
+        borderCapStyle: 'square',
+        pointBorderColor: "white",
+        pointBackgroundColor: "green",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "yellow",
+        pointHoverBorderColor: "green",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        data: [],
+        spanGaps: true,
+    }
 
-        var ctx = document.getElementById(idChart).getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: type,
+    var data = {
+        labels: [],
+        datasets: [{
+            label: "Employee",
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(0,255,0,0.4)",
+            borderColor: "green", // The main line color
+            borderCapStyle: 'square',
+            pointBorderColor: "white",
+            pointBackgroundColor: "green",
+            pointBorderWidth: 1,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "yellow",
+            pointHoverBorderColor: "green",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 10,
+            data: [],
+            spanGaps: true,
+        }]
+    };
 
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: data ,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+
+
+    var options = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
                 }
-            }
+            }]
+        },
+        title: {
+            fontSize: 18,
+            display: true,
+            text: 'Test bar char',
+            position: 'bottom'
+        }
+    };
+
+    //if y
+    //function dataConversion(data) {
+
+    //    $.each(data, function (index, value) {
+    //        chartData.labels.push(value[chartConfiguration.config.dataY]);
+    //        chartData.data.push(value[chartConfiguration.config.dataX]);
+    //    });
+    //    return chartData;
+    //}
+
+
+    function init() {
+
+        var ctx = document.getElementById('myChartAPI');
+        myChart = new Chart(ctx, {
+            type: chartConfiguration.config.typeOfChart,
+            data: data,
+            options: options
         });
+
     }
 
 
-</script>
+    $(document).ready(function () {
 
-<script>
-    $.get("Home/GetDataAPI", function (data) {
-        $.each(data, function (key, value) {
-            var ctx = document.getElementById(value.chartId).getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
+        init();
+        //get data from API
+        if (chartConfiguration.config.isPagination === true) {
 
-                data: {
-                    labels: value.labels,
-                    datasets: [{
-                        label: value.label,
-                        data: value.data,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
+            for (var index = chartConfiguration.config.pageStart; index <= chartConfiguration.config.pageEnd; index++) {
+
+                let dataScrUrl = chartConfiguration.config.dataSrc + "?" + chartConfiguration.config.pageParametarName + "=" + index;
+
+                $.get(dataScrUrl, function (result) {
+                    console.log(result.page)
+                    if (result.page == 3) {
+                        myChart.data.datasets.push(emptyDataset);
+                        for (var j = 0; j < result.data.length; j++) {
+
+                            myChart.data.labels.push(result.data[j][chartConfiguration.config.dataY]);
+                            myChart.data.datasets[1].data.push(result.data[j][chartConfiguration.config.dataX]);
+                        }
+
                     }
-                }
+                    else {
+                        for (var i = 0; i < result.data.length; i++) {
+                            myChart.data.labels.push(result.data[i][chartConfiguration.config.dataY]);
+                            myChart.data.datasets[0].data.push(result.data[i][chartConfiguration.config.dataX]);
+                        }
+                    }
+
+
+                myChart.update();
+
+            }).done(function (result) {
+
+                console.log("success: do something")
+
             });
-        });
+            }
+
+        }
+
     });
+
+
+
+
+
 </script>

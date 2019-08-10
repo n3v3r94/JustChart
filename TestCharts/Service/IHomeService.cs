@@ -8,6 +8,6 @@ namespace TestCharts.Service
 {
     public interface IHomeService
     {
-         Task<HomePageCharts>   GetDataJson();
+         Task<HomePageConfig>   GetDataJson();
     }
 }

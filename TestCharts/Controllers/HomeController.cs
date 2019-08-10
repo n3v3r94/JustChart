@@ -8,7 +8,6 @@ using TestCharts.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-
 namespace TestCharts.Controllers
 {
     public class HomeController : Controller
@@ -17,20 +16,24 @@ namespace TestCharts.Controllers
 
         public HomeController(IHomeService homeService)
         {
+
             this.homeService = homeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-           
-            return View (new HomePageCharts());
+            var model = await homeService.GetDataJson();
+
+            return View (model);
         }
 
-        public async Task<IActionResult> GetDataJson()
+        public async Task<IActionResult> GetJsonConfiguration()
         {
-            var test = await homeService.GetDataJson();
+            var config = await homeService.GetDataJson();
 
-            return Json(test);
+            var test = config;
+           var test2 = config;
+            return Json(config);
         }
 
         public  IActionResult GetDataAPI()

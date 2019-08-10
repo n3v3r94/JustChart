@@ -11,15 +11,15 @@ namespace TestCharts.Implemantation
 {
     public class HomeService : IHomeService
     {
-        public async Task<HomePageCharts> GetDataJson()
+        public async Task<HomePageConfig> GetDataJson()
         {
 
-            string path = @"./homePageChart.json";
-            HomePageCharts  test = new HomePageCharts();
+            string path = "./homePageChart.json";
+            HomePageConfig test = new HomePageConfig();
              using (StreamReader reader = new StreamReader(path))
             {
                 var json =  await reader.ReadToEndAsync();
-                test =  JsonConvert.DeserializeObject<HomePageCharts>(json);
+                test =  JsonConvert.DeserializeObject<HomePageConfig>(json);
             }
 
             return test;
