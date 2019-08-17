@@ -1,8 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TestCharts.ViewModels
 {
@@ -39,5 +35,18 @@ namespace TestCharts.ViewModels
         public int PagePerDataSet { get; set; }
         [JsonProperty]
         public string PageParametarName { get; set; }
+        [JsonProperty]
+        public string RequestType { get; set; }
+        [JsonProperty]
+        public string RequestMode { get; set; }
+        [JsonProperty]
+        public string Request { get; set; }
+        [JsonProperty]
+        public string LoopToExtract { get; set; }
+        [JsonProperty]
+        public string LoopParamInRequest { get; set; }
+        [JsonProperty]
+        public string LoopParamInReqestStep { get; set; }
+   
     }
 }

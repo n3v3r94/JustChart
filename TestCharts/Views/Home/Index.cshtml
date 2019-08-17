@@ -27,53 +27,23 @@
 
 
 <script>
+
+    $(document).ready(function () {
+        var color = ['rgb(255, 99, 132,0.5)', 'rgb(255, 159, 64,0.5)', 'rgb(255, 205, 86,0.5)', 'rgb(75, 192, 192,0.5)', 'rgb(54, 162, 235,0.5)', 'rgb(153, 102, 255,0.5)', 'rgb(201, 203, 207,0.5)'];
+        var borderColors = [
+            '#f67019',
+            '#4dc9f6',
+            '#f53794',
+            '#537bc4',
+            '#acc236',
+            '#166a8f',
+            '#00a950',
+            '#58595b',
+            '#8549ba'
+        ];
     var myChart;
 
     let chartConfiguration = @Html.Raw(Json.Serialize(Model));
-
-    var emptyDataset = {
-        label: "Employee2",
-        fill: true,
-        lineTension: 0.1,
-        backgroundColor: "rgba(247, 0, 0,0.4)",
-        borderColor: "green", // The main line color
-        borderCapStyle: 'square',
-        pointBorderColor: "white",
-        pointBackgroundColor: "green",
-        pointBorderWidth: 1,
-        pointHoverRadius: 8,
-        pointHoverBackgroundColor: "yellow",
-        pointHoverBorderColor: "green",
-        pointHoverBorderWidth: 2,
-        pointRadius: 4,
-        pointHitRadius: 10,
-        data: [],
-        spanGaps: true,
-    }
-
-    var data = {
-        labels: [],
-        datasets: [{
-            label: "Employee",
-            fill: true,
-            lineTension: 0.1,
-            backgroundColor: "rgba(0,255,0,0.4)",
-            borderColor: "green", // The main line color
-            borderCapStyle: 'square',
-            pointBorderColor: "white",
-            pointBackgroundColor: "green",
-            pointBorderWidth: 1,
-            pointHoverRadius: 8,
-            pointHoverBackgroundColor: "yellow",
-            pointHoverBorderColor: "green",
-            pointHoverBorderWidth: 2,
-            pointRadius: 4,
-            pointHitRadius: 10,
-            data: [],
-            spanGaps: true,
-        }]
-    };
-
 
 
     var options = {
@@ -87,78 +57,88 @@
         title: {
             fontSize: 18,
             display: true,
-            text: 'Test bar char',
-            position: 'bottom'
+            text: 'Charts of Doctors',
+            position: 'top'
         }
     };
 
-    //if y
-    //function dataConversion(data) {
+    $.ajax({
+        url: chartConfiguration.config.dataSrc,
+        type: chartConfiguration.config.requestType,
+        dataType: "json",
+        data: JSON.stringify( { "limit": 250, "offset": 0, "academicRankTypeIds": [1], "academicRankTypes": [{ "name": "Професор", "id": 1 }, { "name": "Доцент", "id": 2 }], "isHabilitated": true }),
+        contentType: "application/json"
+    }).done(function (data) {
 
-    //    $.each(data, function (index, value) {
-    //        chartData.labels.push(value[chartConfiguration.config.dataY]);
-    //        chartData.data.push(value[chartConfiguration.config.dataX]);
-    //    });
-    //    return chartData;
-    //}
+        init();
+        console.log(data);
+        let resultFromConversionData = dataConversion(data);
+        for (var j = 0; j < resultFromConversionData.length; j++) {
 
+            var newDataset = {
+                label: resultFromConversionData[j].label,
+                labels: resultFromConversionData[j].label,
+                backgroundColor: color[j%6],
+                borderColor: borderColors[j%6],
+                borderWidth: 2,
+                data: [],
+                spanGaps: true,
+            };
+
+            myChart.data.datasets.push(newDataset);
+
+            myChart.data.datasets[j].data.push(resultFromConversionData[j].data);
+        }
+
+        myChart.update();
+        });
+
+    function dataConversion(data) {
+
+        let dataSets = [];
+
+        for (var j = 0; j < data.result.length; j++) {
+
+            if (data.result[j].academicDegrees[0] == null || data.result[j].academicDegrees[0] =='undefined'  || data.result[j].academicDegrees[0].academicDegreeType === 'undefined' || data.result[j].academicDegrees[0].academicDegreeType === null
+                || data.result[j].academicDegrees[0].academicDegreeType.alias === 'undefined' || data.result[j].academicDegrees[0].academicDegreeType.alias === null) {
+                if (dataSets.findIndex(x => x.label === "No Information" ) === -1) {
+                    let temp = { label: "No Information", data: 1 };
+                    dataSets.push(temp);
+                }
+                if (!dataSets.findIndex(x => x.label === "No Information") !== -1) {
+                    let index = dataSets.findIndex(x => x.label === "No Information");
+                    dataSets[index].data = dataSets[index].data + 1;
+                }
+                continue
+            }
+
+            if (dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias) === -1) {
+                let temp = { label: data.result[j].academicDegrees[0].academicDegreeType.alias, data: 1 };
+                dataSets.push(temp);
+                continue;
+            }
+
+            if (!dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias) !== -1) {
+                let index = dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias);
+                dataSets[index].data = dataSets[index].data + 1;
+            }
+        }
+
+        return dataSets;
+    }
 
     function init() {
 
         var ctx = document.getElementById('myChartAPI');
         myChart = new Chart(ctx, {
             type: chartConfiguration.config.typeOfChart,
-            data: data,
+            data: [{
+                datasets: [{}]
+            }],
             options: options
         });
 
     }
-
-
-    $(document).ready(function () {
-
-        init();
-        //get data from API
-        if (chartConfiguration.config.isPagination === true) {
-
-            for (var index = chartConfiguration.config.pageStart; index <= chartConfiguration.config.pageEnd; index++) {
-
-                let dataScrUrl = chartConfiguration.config.dataSrc + "?" + chartConfiguration.config.pageParametarName + "=" + index;
-
-                $.get(dataScrUrl, function (result) {
-                    console.log(result.page)
-                    if (result.page == 3) {
-                        myChart.data.datasets.push(emptyDataset);
-                        for (var j = 0; j < result.data.length; j++) {
-
-                            myChart.data.labels.push(result.data[j][chartConfiguration.config.dataY]);
-                            myChart.data.datasets[1].data.push(result.data[j][chartConfiguration.config.dataX]);
-                        }
-
-                    }
-                    else {
-                        for (var i = 0; i < result.data.length; i++) {
-                            myChart.data.labels.push(result.data[i][chartConfiguration.config.dataY]);
-                            myChart.data.datasets[0].data.push(result.data[i][chartConfiguration.config.dataX]);
-                        }
-                    }
-
-
-                myChart.update();
-
-            }).done(function (result) {
-
-                console.log("success: do something")
-
-            });
-            }
-
-        }
-
     });
-
-
-
-
 
 </script>

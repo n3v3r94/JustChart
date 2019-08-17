@@ -2,14 +2,21 @@
   "config": {
     "id": "1",
     "idChart": "myChart",
-    "dataSrc": "https:\/\/reqres.in\/api\/users",
+    "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
+    "https": null,
     "dataX": "id",
     "DataY": "first_name",
     "typeOfChart": "bar",
+    "requestType": "POST",
+    "requestMode": "RequestPayload",
+    "request": "TODO  make dynamicly get request data",
+    "loopToExtract": "yes",
+    "loopParamInRequest": "param",
+    "loopParamInReqestStep": "100",
     "isPagination": "true",
     "pageStart": "1",
     "pageEnd": "3",
-    "pageParametarName":  "page",
+    "pageParametarName": "page",
     "pagePerDataSet": "1"
   }
 }
