@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TestCharts.ViewModels;
 
 namespace TestCharts.Service
 {
     public interface IHomeService
     {
-         Task<HomePageConfig>   GetDataJson();
+        Task<HomePageConfig> GetDataJson();
+        Task<string> GetDataFromApiPost(HomePageConfig homePage);
+        Task<string> DataRetrievalResponse(string response, HomePageConfig homePage);
     }
 }

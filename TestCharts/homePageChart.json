@@ -4,8 +4,8 @@
     "idChart": "myChart",
     "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
     "https": null,
-    "dataX": "id",
-    "DataY": "first_name",
+    "dataX": "count",
+    "DataY": "alias",
     "typeOfChart": "bar",
     "requestType": "POST",
     "requestMode": "RequestPayload",
@@ -17,6 +17,12 @@
     "pageStart": "1",
     "pageEnd": "3",
     "pageParametarName": "page",
-    "pagePerDataSet": "1"
+    "pagePerDataSet": "1",
+    "parametars": "{'limit': '1000', 'offset' : '0','isHabilitated': 'true'}",
+    "pathRoot": "result",
+    "pathValue": "$.academicDegrees[0].academicDegreeType.alias",
+    "operationType" : "count" 
+
+
   }
 }

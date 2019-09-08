@@ -63,21 +63,20 @@
     };
 
     $.ajax({
-        url: chartConfiguration.config.dataSrc,
-        type: chartConfiguration.config.requestType,
+        url: "Home/GetDataChart",
+        type: "GET",
         dataType: "json",
-        data: JSON.stringify( { "limit": 250, "offset": 0, "academicRankTypeIds": [1], "academicRankTypes": [{ "name": "Професор", "id": 1 }, { "name": "Доцент", "id": 2 }], "isHabilitated": true }),
         contentType: "application/json"
     }).done(function (data) {
 
         init();
-        console.log(data);
-        let resultFromConversionData = dataConversion(data);
-        for (var j = 0; j < resultFromConversionData.length; j++) {
+
+
+        for (var j = 0; j < data.length; j++) {
 
             var newDataset = {
-                label: resultFromConversionData[j].label,
-                labels: resultFromConversionData[j].label,
+                label: data[j][chartConfiguration.config.dataY],
+                labels: data[j][[chartConfiguration.config.dataY]],
                 backgroundColor: color[j%6],
                 borderColor: borderColors[j%6],
                 borderWidth: 2,
@@ -87,45 +86,14 @@
 
             myChart.data.datasets.push(newDataset);
 
-            myChart.data.datasets[j].data.push(resultFromConversionData[j].data);
+            myChart.data.datasets[j].data.push(data[j][chartConfiguration.config.dataX]);
         }
 
         myChart.update();
+
         });
 
-    function dataConversion(data) {
 
-        let dataSets = [];
-
-        for (var j = 0; j < data.result.length; j++) {
-
-            if (data.result[j].academicDegrees[0] == null || data.result[j].academicDegrees[0] =='undefined'  || data.result[j].academicDegrees[0].academicDegreeType === 'undefined' || data.result[j].academicDegrees[0].academicDegreeType === null
-                || data.result[j].academicDegrees[0].academicDegreeType.alias === 'undefined' || data.result[j].academicDegrees[0].academicDegreeType.alias === null) {
-                if (dataSets.findIndex(x => x.label === "No Information" ) === -1) {
-                    let temp = { label: "No Information", data: 1 };
-                    dataSets.push(temp);
-                }
-                if (!dataSets.findIndex(x => x.label === "No Information") !== -1) {
-                    let index = dataSets.findIndex(x => x.label === "No Information");
-                    dataSets[index].data = dataSets[index].data + 1;
-                }
-                continue
-            }
-
-            if (dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias) === -1) {
-                let temp = { label: data.result[j].academicDegrees[0].academicDegreeType.alias, data: 1 };
-                dataSets.push(temp);
-                continue;
-            }
-
-            if (!dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias) !== -1) {
-                let index = dataSets.findIndex(x => x.label === data.result[j].academicDegrees[0].academicDegreeType.alias);
-                dataSets[index].data = dataSets[index].data + 1;
-            }
-        }
-
-        return dataSets;
-    }
 
     function init() {
 

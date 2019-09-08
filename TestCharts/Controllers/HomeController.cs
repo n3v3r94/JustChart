@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
+using System.Threading.Tasks;
 using TestCharts.Models;
 using TestCharts.Service;
 using TestCharts.ViewModels;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 namespace TestCharts.Controllers
 {
     public class HomeController : Controller
@@ -22,9 +19,20 @@ namespace TestCharts.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await homeService.GetDataJson();
+            var jsonConfig = await homeService.GetDataJson();
+            var response = await homeService.GetDataFromApiPost(jsonConfig);
+            await homeService.DataRetrievalResponse(response,jsonConfig);
+           
 
-            return View (model);
+            return View(jsonConfig);
+        }
+
+        public async Task<string> GetDataChart()
+        {
+            var jsonConfig = await homeService.GetDataJson();
+            var response = await homeService.GetDataFromApiPost(jsonConfig);
+            var data = await homeService.DataRetrievalResponse(response,jsonConfig);
+            return data;
         }
 
         public async Task<IActionResult> GetJsonConfiguration()
@@ -32,20 +40,20 @@ namespace TestCharts.Controllers
             var config = await homeService.GetDataJson();
 
             var test = config;
-           var test2 = config;
+            var test2 = config;
             return Json(config);
         }
 
-        public  IActionResult GetDataAPI()
+        public IActionResult GetDataAPI()
         {
-           
+
 
             List<ViewModelAPI> chartData = new List<ViewModelAPI>();
             chartData.Add(new ViewModelAPI
             {
                 ChartId = "myChartAPI",
                 Data = new List<int> { 12, 9, 3, 5, 3 },
-                Labels = new List<string> { "Red", "Blue", "Yellow", "Green",  "Orange" },
+                Labels = new List<string> { "Red", "Blue", "Yellow", "Green", "Orange" },
                 LabelTitle = "Test"
             });
 

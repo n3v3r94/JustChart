@@ -47,6 +47,14 @@ namespace TestCharts.ViewModels
         public string LoopParamInRequest { get; set; }
         [JsonProperty]
         public string LoopParamInReqestStep { get; set; }
-   
+        [JsonProperty]
+        public string Parametars { get; set; }
+        [JsonProperty]
+        public string PathRoot { get; set; }
+        [JsonProperty]
+        public string PathValue { get; set; }
+        [JsonProperty]
+        public string OperationType { get; set; }
+
     }
 }
