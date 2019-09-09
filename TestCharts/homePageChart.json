@@ -6,7 +6,7 @@
     "https": null,
     "dataX": "count",
     "DataY": "alias",
-    "typeOfChart": "bar",
+    "typeOfChart": "pie",
     "requestType": "POST",
     "requestMode": "RequestPayload",
     "request": "TODO  make dynamicly get request data",

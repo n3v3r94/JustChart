@@ -71,25 +71,53 @@
 
         init();
 
+        if (chartConfiguration.config.typeOfChart ==="bar") {
+            for (var j = 0; j < data.length; j++) {
+                var newDataset = {
+                    label: data[j][chartConfiguration.config.dataY],
+                    labels: data[j][[chartConfiguration.config.dataY]],
+                    backgroundColor: color[j % 6],
+                    borderColor: borderColors[j % 6],
+                    borderWidth: 2,
+                    data: [],
+                    spanGaps: true,
+                };
 
-        for (var j = 0; j < data.length; j++) {
+                myChart.data.datasets.push(newDataset);
 
-            var newDataset = {
-                label: data[j][chartConfiguration.config.dataY],
-                labels: data[j][[chartConfiguration.config.dataY]],
-                backgroundColor: color[j%6],
-                borderColor: borderColors[j%6],
-                borderWidth: 2,
-                data: [],
-                spanGaps: true,
+                myChart.data.datasets[j].data.push(data[j][chartConfiguration.config.dataX]);
+            }
+
+            myChart.update();
+        }
+        else {
+            let dataChar = {
+                "labels" : [],
+                "data": []
             };
 
+            for (var i = 0; i < data.length; i++) {
+                dataChar.labels.push(data[i][chartConfiguration.config.dataY]);
+                dataChar.data.push( data[i][chartConfiguration.config.dataX]);
+            } 
+
+            var newDataset = {
+
+                label:"Chart of ..",
+                backgroundColor: color[i % 2],
+                borderColor: borderColors[i % 2],
+                borderWidth: 2,
+                data: dataChar.data,
+                spanGaps: false,
+            };
+
+            myChart.label ="LIne"
             myChart.data.datasets.push(newDataset);
-
-            myChart.data.datasets[j].data.push(data[j][chartConfiguration.config.dataX]);
+            myChart.data.labels = dataChar.labels;
+           
+            myChart.update();
         }
-
-        myChart.update();
+       
 
         });
 
