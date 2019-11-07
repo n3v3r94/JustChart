@@ -1,0 +1,112 @@
+{
+  "dashboards": 
+    {
+      "dashboard": [
+        {
+          "id": "1",
+          "title": "Home Page Dashboards",
+          "dashlets": [
+            {
+              "idChart": "myChart0",
+              "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
+              "https": null,
+              "dataX": "count",
+              "DataY": "alias",
+              "typeOfChart": "bar",
+              "requestType": "POST",
+              "requestMode": "RequestPayload",
+              "request": "TODO  make dynamicly get request data",
+              "loopToExtract": "yes",
+              "loopParamInRequest": "param",
+              "loopParamInReqestStep": "100",
+              "isPagination": "true",
+              "pageStart": "1",
+              "pageEnd": "3",
+              "pageParametarName": "page",
+              "pagePerDataSet": "1",
+              "parametars": "{'limit': '1000', 'offset' : '0','isHabilitated': 'true'}",
+              "pathRoot": "result",
+              "pathValue": "$.academicRanks[1].academicRankType.alias",
+              "operationType": "count"
+            },
+            {
+              "idChart": "myChart1",
+              "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
+              "https": null,
+              "dataX": "count",
+              "DataY": "alias",
+              "typeOfChart": "bar",
+              "requestType": "POST",
+              "requestMode": "RequestPayload",
+              "request": "TODO  make dynamicly get request data",
+              "loopToExtract": "yes",
+              "loopParamInRequest": "param",
+              "loopParamInReqestStep": "100",
+              "isPagination": "true",
+              "pageStart": "1",
+              "pageEnd": "3",
+              "pageParametarName": "page",
+              "pagePerDataSet": "1",
+              "parametars": "{'limit': '100', 'offset' : '0','isHabilitated': 'true'}",
+              "pathRoot": "result",
+              "pathValue": "$.academicRanks[1].academicRankType.alias",
+              "operationType": "count"
+            },
+            {
+              "idChart": "myChart2",
+              "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
+              "https": null,
+              "dataX": "count",
+              "DataY": "alias",
+              "typeOfChart": "bar",
+              "requestType": "POST",
+              "requestMode": "RequestPayload",
+              "request": "TODO  make dynamicly get request data",
+              "loopToExtract": "yes",
+              "loopParamInRequest": "param",
+              "loopParamInReqestStep": "100",
+              "isPagination": "true",
+              "pageStart": "1",
+              "pageEnd": "3",
+              "pageParametarName": "page",
+              "pagePerDataSet": "1",
+              "parametars": "{'limit': '2000', 'offset' : '0','isHabilitated': 'true'}",
+              "pathRoot": "result",
+              "pathValue": "$.academicRanks[1].academicRankType.alias",
+              "operationType": "count"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "title": "Home Page Dashboards",
+          "dashlets": [
+            {
+              "idChart": "myChart",
+              "dataSrc": "https:\/\/ras.nacid.bg\/api\/reg\/Public\/Search\/Filtered",
+              "https": null,
+              "dataX": "count",
+              "DataY": "alias",
+              "typeOfChart": "bar",
+              "requestType": "POST",
+              "requestMode": "RequestPayload",
+              "request": "TODO  make dynamicly get request data",
+              "loopToExtract": "yes",
+              "loopParamInRequest": "param",
+              "loopParamInReqestStep": "100",
+              "isPagination": "true",
+              "pageStart": "1",
+              "pageEnd": "3",
+              "pageParametarName": "page",
+              "pagePerDataSet": "1",
+              "parametars": "{'limit': '1000', 'offset' : '0','isHabilitated': 'true'}",
+              "pathRoot": "result",
+              "pathValue": "$.academicRanks[1].academicRankType.alias",
+              "operationType": "count"
+            }
+          ]
+        }
+      ]
+    }
+}
+

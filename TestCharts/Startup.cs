@@ -39,7 +39,7 @@ namespace TestCharts
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddTransient<IHomeService, HomeService>();
+            services.AddTransient<IDashboardService, DashboardService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

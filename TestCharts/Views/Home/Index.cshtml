@@ -1,6 +1,6 @@
 ﻿@using System.Web
 @using Newtonsoft.Json;
-@model HomePageConfig
+
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,130 +11,31 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-
+<script src="~/js/dashboard.js"></script>
 
 <div class="row">
     <div class=" col-md-4">
-        <canvas id="myChartAPI" width="400" height="400"></canvas>
+        <canvas id="myChartAPI0" width="400" height="400"></canvas>
+    </div>
+    <div class=" col-md-4">
+        <canvas id="myChartAPI1" width="400" height="400"></canvas>
     </div>
     <div class=" col-md-4">
         <canvas id="myChartAPI2" width="400" height="400"></canvas>
     </div>
+</div>
+<div class="row">
     <div class=" col-md-4">
         <canvas id="myChartAPI3" width="400" height="400"></canvas>
+    </div>
+    <div class=" col-md-4">
+        <canvas id="myChartAPI4" width="400" height="400"></canvas>
+    </div>
+    <div class=" col-md-4">
+        <canvas id="myChartAPI5" width="400" height="400"></canvas>
     </div>
 </div>
 
 
-<script>
-
-    $(document).ready(function () {
-        var color = ['rgb(255, 99, 132,0.5)', 'rgb(255, 159, 64,0.5)', 'rgb(255, 205, 86,0.5)', 'rgb(75, 192, 192,0.5)', 'rgb(54, 162, 235,0.5)', 'rgb(153, 102, 255,0.5)', 'rgb(201, 203, 207,0.5)'];
-        var borderColors = [
-            '#f67019',
-            '#4dc9f6',
-            '#f53794',
-            '#537bc4',
-            '#acc236',
-            '#166a8f',
-            '#00a950',
-            '#58595b',
-            '#8549ba'
-        ];
-    var myChart;
-
-    let chartConfiguration = @Html.Raw(Json.Serialize(Model));
 
 
-    var options = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        title: {
-            fontSize: 18,
-            display: true,
-            text: 'Charts of Doctors',
-            position: 'top'
-        }
-    };
-
-    $.ajax({
-        url: "Home/GetDataChart",
-        type: "GET",
-        dataType: "json",
-        contentType: "application/json"
-    }).done(function (data) {
-
-        init();
-
-        if (chartConfiguration.config.typeOfChart ==="bar") {
-            for (var j = 0; j < data.length; j++) {
-                var newDataset = {
-                    label: data[j][chartConfiguration.config.dataY],
-                    labels: data[j][[chartConfiguration.config.dataY]],
-                    backgroundColor: color[j % 6],
-                    borderColor: borderColors[j % 6],
-                    borderWidth: 2,
-                    data: [],
-                    spanGaps: true,
-                };
-
-                myChart.data.datasets.push(newDataset);
-
-                myChart.data.datasets[j].data.push(data[j][chartConfiguration.config.dataX]);
-            }
-
-            myChart.update();
-        }
-        else {
-            let dataChar = {
-                "labels" : [],
-                "data": []
-            };
-
-            for (var i = 0; i < data.length; i++) {
-                dataChar.labels.push(data[i][chartConfiguration.config.dataY]);
-                dataChar.data.push( data[i][chartConfiguration.config.dataX]);
-            } 
-
-            var newDataset = {
-
-                label:"Chart of ..",
-                backgroundColor: color[i % 2],
-                borderColor: borderColors[i % 2],
-                borderWidth: 2,
-                data: dataChar.data,
-                spanGaps: false,
-            };
-
-            myChart.label ="LIne"
-            myChart.data.datasets.push(newDataset);
-            myChart.data.labels = dataChar.labels;
-           
-            myChart.update();
-        }
-       
-
-        });
-
-
-
-    function init() {
-
-        var ctx = document.getElementById('myChartAPI');
-        myChart = new Chart(ctx, {
-            type: chartConfiguration.config.typeOfChart,
-            data: [{
-                datasets: [{}]
-            }],
-            options: options
-        });
-
-    }
-    });
-
-</script>

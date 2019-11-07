@@ -9,40 +9,32 @@ namespace TestCharts.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IHomeService homeService;
-
-        public HomeController(IHomeService homeService)
-        {
-
-            this.homeService = homeService;
-        }
+       
 
         public async Task<IActionResult> Index()
         {
-            var jsonConfig = await homeService.GetDataJson();
-            var response = await homeService.GetDataFromApiPost(jsonConfig);
-            await homeService.DataRetrievalResponse(response,jsonConfig);
+       
            
 
-            return View(jsonConfig);
+            return View();
         }
 
-        public async Task<string> GetDataChart()
-        {
-            var jsonConfig = await homeService.GetDataJson();
-            var response = await homeService.GetDataFromApiPost(jsonConfig);
-            var data = await homeService.DataRetrievalResponse(response,jsonConfig);
-            return data;
-        }
+        //public async Task<string> GetDataChart()
+        //{
+        //    //var jsonConfig = await homeService.GetDataJson();
+        //    //var response = await homeService.GetDataFromApiPost(jsonConfig);
+        //    //var data = await homeService.DataRetrievalResponse(response,jsonConfig);
+        //    //return data;
+        //}
 
-        public async Task<IActionResult> GetJsonConfiguration()
-        {
-            var config = await homeService.GetDataJson();
+        //public async Task<IActionResult> GetJsonConfiguration()
+        //{
+        //    //var config = await homeService.GetDataJson();
 
-            var test = config;
-            var test2 = config;
-            return Json(config);
-        }
+        //    //var test = config;
+        //    //var test2 = config;
+        //    /return Json(config);
+        //}
 
         public IActionResult GetDataAPI()
         {

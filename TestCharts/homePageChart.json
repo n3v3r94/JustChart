@@ -22,7 +22,7 @@
     "pathRoot": "result",
     "pathValue": "$.academicRanks[1].academicRankType.alias",
     "operationType": "count"
-
-
   }
 }
+
+
