@@ -1,11 +1,13 @@
 ﻿
 (function () {
 
-    var chart = [
-        myChart0 = {},
-        myChart1 = {},
-        myChart2 = {},
-    ];
+    //var chart = [
+    //    myChart0 = {},
+    //    myChart1 = {},
+    //    myChart2 = {},
+    //];
+
+    var myChart = {};
     var color = ['rgb(255, 99, 132,0.5)', 'rgb(255, 159, 64,0.5)', 'rgb(255, 205, 86,0.5)', 'rgb(75, 192, 192,0.5)', 'rgb(54, 162, 235,0.5)', 'rgb(153, 102, 255,0.5)', 'rgb(201, 203, 207,0.5)'];
     var borderColors = [
         '#f67019',
@@ -35,6 +37,10 @@
                         type: "POST",
                         contentType: "application/json",
                         data: JSON.stringify(test),
+                        beforeSend: function () {
+                            $("#my-chart-api-" + i).append('<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>')
+                           
+                        },
                         success: function (response) {
                             var currentChart = JSON.parse(response)
                             init(i, test.typeOfChart);
@@ -54,7 +60,10 @@
                                 chart[i].data.datasets[j].data.push(tempChart.count);
                             }
                             chart[i].update()
-                        }
+                        },
+                        complete: function () {
+                            $("#my-chart-api-" + i).remove();
+                        },
                     });
                 })(i);
             }
@@ -76,13 +85,18 @@
             display: true,
             text: 'Charts of Doctors',
             position: 'top'
+        },
+        animation: {
+            duration: 5000,
+            onProgress: function (animation) {
+            },
         }
     };
 
     function init(id, type) {
 
         var ctx = document.getElementById('myChartAPI' + id);
-        chart[id] = new Chart(ctx, {
+        myChart = new Chart(ctx, {
             type: type,
             data: [{
                 datasets: [{}]
