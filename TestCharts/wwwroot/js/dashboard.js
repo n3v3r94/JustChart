@@ -56,10 +56,10 @@
                                     spanGaps: true,
                                 };
 
-                                chart[i].data.datasets.push(newDataset);
-                                chart[i].data.datasets[j].data.push(tempChart.count);
+                                myChart.data.datasets.push(newDataset);
+                                myChart.data.datasets[j].data.push(tempChart.count);
                             }
-                            chart[i].update()
+                            myChart.update()
                         },
                         complete: function () {
                             $("#my-chart-api-" + i).remove();
