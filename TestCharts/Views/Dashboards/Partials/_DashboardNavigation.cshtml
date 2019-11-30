@@ -1,0 +1,14 @@
+﻿@using TestCharts.ViewModels.DashboardShorhViewModel
+
+@model DashboardShortJson
+
+    <div class="row">
+        @foreach (var dashboard in Model.dashboards.Dashboard)
+        {
+        <div class="col-md-3">
+            
+            <button class="btn btn-primary" onclick="dashboardManager.getDashboardById(@dashboard.Id)"> @dashboard.Title (@(dashboard.Dashlets.Count())) </button>
+            
+        </div>
+        }
+    </div>

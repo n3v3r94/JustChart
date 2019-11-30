@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TestCharts</a>
@@ -48,9 +48,9 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>*@
     <div class="container">
-        <partial name="_CookieConsentPartial" />
+       
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -81,6 +81,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dashboardManager.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

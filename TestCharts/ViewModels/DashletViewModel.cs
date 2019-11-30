@@ -11,7 +11,8 @@ namespace TestCharts.ViewModels
         /// id of configuration  chart
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
+        public string ParrentId { get; set; }
         //id of html elemet
         [JsonProperty("idChart")]
         public string IdChart { get; set; }
@@ -58,5 +59,13 @@ namespace TestCharts.ViewModels
         public string PathValue { get; set; }
         [JsonProperty("operationType")]
         public string OperationType { get; set; }
+        [JsonProperty("width")]
+        public string Width { get; set; }
+
+        [JsonProperty("height")]
+        public string Height { get; set; }
+
+        [JsonProperty("column")]
+        public int Column { get; set; }
     }
 }
