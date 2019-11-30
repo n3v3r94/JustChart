@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TestCharts.Data;
-using TestCharts.Implemantation;
-using TestCharts.Service;
+using TestCharts.Services;
 
 namespace TestCharts
 {

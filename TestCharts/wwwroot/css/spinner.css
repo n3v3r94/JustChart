@@ -1,8 +1,9 @@
 ﻿.lds-roller {
     display: inline-block;
-    position: relative;
+    position: absolute;
     width: 64px;
     height: 64px;
+    margin:100px;
 }
 
     .lds-roller div {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Threading.Tasks;
-using TestCharts.Service;
+using TestCharts.Services;
 using TestCharts.ViewModels;
 using TestCharts.ViewModels.DashboardShorhViewModel;
 

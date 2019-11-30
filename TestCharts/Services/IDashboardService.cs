@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TestCharts.ViewModels;
 using TestCharts.ViewModels.DashboardInfoViewModel;
 using TestCharts.ViewModels.DashboardShorhViewModel;
 
-namespace TestCharts.Service
+namespace TestCharts.Services
 {
     public interface IDashboardService
     {

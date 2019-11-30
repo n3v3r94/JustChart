@@ -7,12 +7,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using TestCharts.Service;
+using TestCharts.Services;
 using TestCharts.ViewModels;
 using TestCharts.ViewModels.DashboardInfoViewModel;
 using TestCharts.ViewModels.DashboardShorhViewModel;
 
-namespace TestCharts.Implemantation
+namespace TestCharts.Services
 {
     public class DashboardService : IDashboardService
     {

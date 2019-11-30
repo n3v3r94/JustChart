@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TestCharts.Models;
-using TestCharts.Service;
+using TestCharts.Services;
 using TestCharts.ViewModels;
 namespace TestCharts.Controllers
 {

@@ -79,7 +79,7 @@
 
     function createDashletContainer(dashetInfo) {
         let $dashletHTML = '<div class=" col-md-' + dashetInfo.column + '">'
-            + '  <div id="loader-id-' + dashetInfo.id + '" style="align-items:center; margin:' + dashetInfo.width / 4 + '"></div>'
+            + '  <div id="loader-id-' + dashetInfo.id + '" style="align-items:center; margin:' + dashetInfo.width / 2 + '"></div>'
             + '<canvas id="dashlet-' + dashetInfo.id + '" width="' + dashetInfo.width + '" height="' + dashetInfo.height + '">  </canvas>'
             + '</div>'
         $("#main-container-dashboard").append($dashletHTML);
@@ -87,35 +87,46 @@
         let parrentId = dashetInfo.parrentId;
         let dashletId = dashetInfo.id;
         (function (dashletId, parrentId) {
-            $.ajax({
-                url: "Dashboard/GetDashboardDashletData",
-                type: "GET",
-                contentType: "application/json",
-                data: {
-                    dashboardId: parrentId,
-                    dashletId: dashletId,
-                },
-                success: function (dasgletData) {
-                    var currentChart = JSON.parse(dasgletData)
-                    for (var j = 0; j < currentChart.length; j++) {
-                        tempChart = currentChart[j];
-                        var newDataset = {
-                            label: tempChart.alias,
-                            labels: tempChart.count,
-                            backgroundColor: color[j % 6],
-                            borderColor: borderColors[j % 6],
-                            borderWidth: 2,
-                            data: [],
-                            spanGaps: true,
-                        };
-
-                        myChart[dashletId].data.datasets.push(newDataset);
-                        myChart[dashletId].data.datasets[j].data.push(tempChart.count);
-                    }
-                    myChart[dashletId].update()
-                },
-            });
+            getDashletData(dashletId, parrentId)
         })(dashletId, parrentId);
+    }
+
+    function getDashletData(dashletId, parrentId) {
+        $.ajax({
+            url: "Dashboard/GetDashboardDashletData",
+            type: "GET",
+            contentType: "application/json",
+            data: {
+                dashboardId: parrentId,
+                dashletId: dashletId,
+            },
+            beforeSend: function () {
+                $("#loader-id-" + dashletId).append('<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>')
+
+            },
+            success: function (dasgletData) {
+                var currentChart = JSON.parse(dasgletData)
+                for (var j = 0; j < currentChart.length; j++) {
+                    tempChart = currentChart[j];
+                    var newDataset = {
+                        label: tempChart.alias,
+                        labels: tempChart.count,
+                        backgroundColor: color[j % 6],
+                        borderColor: borderColors[j % 6],
+                        borderWidth: 2,
+                        data: [],
+                        spanGaps: true,
+                    };
+
+                    myChart[dashletId].data.datasets.push(newDataset);
+                    myChart[dashletId].data.datasets[j].data.push(tempChart.count);
+                }
+                myChart[dashletId].update()
+            },
+            complete: function () {
+                $("#loader-id-" + dashletId).remove();
+            }
+        });
     }
 
 
